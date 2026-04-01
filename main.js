@@ -1,71 +1,64 @@
-// Получаем элементы
-const fileInput = document.getElementById('fileInput');
-const colsInput = document.getElementById('cols');
-const rowsInput = document.getElementById('rows');
-const keepAspectCheck = document.getElementById('keepAspect');
-const printBtn = document.getElementById('printBtn');
-const pagesCountSpan = document.getElementById('pagesCount');
+const fileInput = document.getElementById('fileInput')
+const colsInput = document.getElementById('cols')
+const rowsInput = document.getElementById('rows')
+const keepAspectCheck = document.getElementById('keepAspect')
+const printBtn = document.getElementById('printBtn')
+const pagesCountSpan = document.getElementById('pagesCount')
 
-// Хранилище выбранных файлов
-let selectedFiles = [];
+fileInput.value = '';
+let selectedFiles = []
 
-// Функция обновления количества страниц
 function updatePagesCount() {
-    const cols = parseInt(colsInput.value, 10) || 1;
-    const rows = parseInt(rowsInput.value, 10) || 1;
-    const imagesPerPage = cols * rows;
-    const totalImages = selectedFiles.length;
+    const cols = parseInt(colsInput.value, 10) || 1
+    const rows = parseInt(rowsInput.value, 10) || 1
+    const imagesPerPage = cols * rows
+    const totalImages = selectedFiles.length
     
-    let pages = 0;
+    let pages = 0
     if (totalImages > 0 && imagesPerPage > 0) {
-        pages = Math.ceil(totalImages / imagesPerPage);
+        pages = Math.ceil(totalImages / imagesPerPage)
     }
-    pagesCountSpan.textContent = `${pages} pages`;
+    pagesCountSpan.textContent = `${pages} pages`
 }
 
-// Событие при выборе файлов
 fileInput.addEventListener('change', function(e) {
-    selectedFiles = Array.from(e.target.files);
-    updatePagesCount();
-});
+    selectedFiles = Array.from(e.target.files)
+    updatePagesCount()
+})
 
-// События изменения количества столбцов/строк
-colsInput.addEventListener('input', updatePagesCount);
-rowsInput.addEventListener('input', updatePagesCount);
+colsInput.addEventListener('input', updatePagesCount)
+rowsInput.addEventListener('input', updatePagesCount)
+updatePagesCount()
 
-// Дополнительно: если меняется чекбокс, количество страниц не меняется, но можно вызвать для единообразия
-keepAspectCheck.addEventListener('change', updatePagesCount); // не влияет, но пусть будет
+// -------------------------------------- print
 
-// Функция печати (адаптирована из предыдущего решения)
 function printImages() {
     if (selectedFiles.length === 0) {
-        alert('Сначала выберите изображения.');
-        return;
+        alert('Сначала выберите изображения.')
+        return
     }
 
-    const cols = parseInt(colsInput.value, 10);
-    const rows = parseInt(rowsInput.value, 10);
+    const cols = parseInt(colsInput.value, 10)
+    const rows = parseInt(rowsInput.value, 10)
     if (isNaN(cols) || cols < 1) {
-        alert('Количество столбцов должно быть не менее 1');
-        return;
+        alert('Количество столбцов должно быть не менее 1')
+        return
     }
     if (isNaN(rows) || rows < 1) {
-        alert('Количество строк должно быть не менее 1');
-        return;
+        alert('Количество строк должно быть не менее 1')
+        return
     }
 
-    const keepAspect = keepAspectCheck.checked;
-    const imagesPerPage = cols * rows;
-    const totalPages = Math.ceil(selectedFiles.length / imagesPerPage);
+    const keepAspect = keepAspectCheck.checked
+    const imagesPerPage = cols * rows
+    const totalPages = Math.ceil(selectedFiles.length / imagesPerPage)
 
-    // Открываем новое окно для печати
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open('', '_blank')
     if (!printWindow) {
-        alert('Разрешите всплывающие окна для этого сайта.');
-        return;
+        alert('Разрешите всплывающие окна для этого сайта.')
+        return
     }
 
-    // Начинаем формировать HTML
     printWindow.document.write(`
         <!DOCTYPE html>
         <html>
@@ -100,7 +93,7 @@ function printImages() {
                 }
                 .grid {
                     display: grid;
-                    grid-template-columns: repeat(${cols}, 1fr);
+                    grid-template-columns: repeat(${cols}, 1fr)
                     grid-auto-rows: 1fr;
                     gap: 4px;
                     width: 100%;
@@ -143,64 +136,50 @@ function printImages() {
             </style>
         </head>
         <body>
-    `);
+    `)
 
     // Массив для временных URL (чтобы освободить после печати)
-    const tempUrls = [];
+    const tempUrls = []
 
     // Генерация страниц
     for (let page = 0; page < totalPages; page++) {
         const startIdx = page * imagesPerPage;
-        const endIdx = Math.min(startIdx + imagesPerPage, selectedFiles.length);
+        const endIdx = Math.min(startIdx + imagesPerPage, selectedFiles.length)
 
-        printWindow.document.write(`<div class="page"><div class="grid">`);
+        printWindow.document.write(`<div class="page"><div class="grid">`)
 
         for (let i = startIdx; i < endIdx; i++) {
-            const file = selectedFiles[i];
-            const url = URL.createObjectURL(file);
-            tempUrls.push(url);
+            const file = selectedFiles[i]
+            const url = URL.createObjectURL(file)
+            tempUrls.push(url)
             printWindow.document.write(`
                 <div class="cell">
-                    <img src="${url}" alt="${escapeHtml(file.name)}">
+                    <img src="${url}">
                 </div>
-            `);
+            `)
         }
 
         // Заполняем оставшиеся ячейки пустыми, чтобы сетка сохраняла структуру
         const cellsOnPage = endIdx - startIdx;
         for (let j = cellsOnPage; j < imagesPerPage; j++) {
-            printWindow.document.write(`<div class="cell"></div>`);
+            printWindow.document.write(`<div class="cell"></div>`)
         }
 
-        printWindow.document.write(`</div></div>`);
+        printWindow.document.write(`</div></div>`)
     }
 
-    printWindow.document.write(`</body></html>`);
-    printWindow.document.close();
+    printWindow.document.write(`</body></html>`)
+    printWindow.document.close()
 
     // Даём время на загрузку изображений (хотя бы 500мс) и вызываем печать
     setTimeout(() => {
-        printWindow.print();
+        printWindow.print()
         // После печати освобождаем ресурсы и закрываем окно
         setTimeout(() => {
-            tempUrls.forEach(url => URL.revokeObjectURL(url));
-            printWindow.close();
-        }, 1000);
-    }, 500);
+            tempUrls.forEach(url => URL.revokeObjectURL(url))
+            printWindow.close()
+        }, 1000)
+    }, 500)
 }
 
-// Простое экранирование для имени файла
-function escapeHtml(str) {
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
-
-// Назначаем обработчик на кнопку печати
-printBtn.addEventListener('click', printImages);
-
-// Инициализация (показываем 0 страниц)
-updatePagesCount();
+printBtn.addEventListener('click', printImages)
