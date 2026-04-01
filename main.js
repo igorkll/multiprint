@@ -71,17 +71,25 @@ function printImages() {
                     box-sizing: border-box;
                 }
 
+                html {
+                    width: 100%;
+                    height: 100%;
+                }
+
                 body {
                     background: white;
                     margin: 0;
                     padding: 0;
+
+                    width: 100%;
+                    height: 100%;
                 }
 
                 .page {
                     page-break-after: always;
                     break-after: page;
                     width: 100%;
-                    height: 100vh;
+                    height: 100%;
                     display: flex;
                     flex-direction: column;
                     justify-content: flex-start;
