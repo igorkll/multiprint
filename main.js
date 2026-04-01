@@ -75,6 +75,7 @@ function printImages() {
                     margin: 0;
                     padding: 0;
                 }
+
                 .page {
                     page-break-after: always;
                     break-after: page;
@@ -82,31 +83,30 @@ function printImages() {
                     height: 100vh;
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    background: white;
+                    justify-content: flex-start;
+                    align-items: flex-start;
                 }
+                
                 .page:last-child {
                     page-break-after: auto;
                     break-after: auto;
                 }
+
                 .grid {
-                    display: grid;
-                    grid-template-columns: repeat(${cols}, 1fr)
-                    grid-auto-rows: 1fr;
-                    gap: 4px;
+                    display: flex;
                     width: 100%;
                     height: 100%;
-                    background: #fff;
                 }
+
                 .cell {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background: #fafafa;
-                    overflow: hidden;
+                    position: relative;
                 }
-                img {
+                
+                .cell > img {
+                    position: absalute;
                     display: block;
                     max-width: 100%;
                     max-height: 100%;
@@ -130,9 +130,6 @@ function printImages() {
                     }
                     .page:last-child {
                         page-break-after: auto;
-                    }
-                    .grid {
-                        gap: 2px;
                     }
                     .cell {
                         background: none;
