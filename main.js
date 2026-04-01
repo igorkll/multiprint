@@ -179,14 +179,8 @@ function printImages() {
     printWindow.document.write(`</body></html>`)
     printWindow.document.close()
 
-    // Даём время на загрузку изображений (хотя бы 500мс) и вызываем печать
     setTimeout(() => {
         printWindow.print()
-        // После печати освобождаем ресурсы и закрываем окно
-        setTimeout(() => {
-            tempUrls.forEach(url => URL.revokeObjectURL(url))
-            printWindow.close()
-        }, 1000)
     }, 500)
 }
 
