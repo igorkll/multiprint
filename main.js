@@ -107,10 +107,6 @@ function printImages() {
                 .cell {
                     width: ${100 / cols}%;
                     height: ${100 / rows}%;
-
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
                     position: relative;
                 }
 
