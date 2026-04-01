@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Печать множества изображений на одной странице</title>
+    <title>multiprint</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    <div class="container">
+        <div class="control-box">
+            <input type="file" id="fileInput" multiple accept="image/*">
+            <div class="spacer"></div>
+            <button class="printBtn" id="printBtn">Print</button>
+        </div>
+    </div>
 </body>
 </html>
