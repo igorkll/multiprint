@@ -70,6 +70,7 @@ function printImages() {
                     padding: 0;
                     box-sizing: border-box;
                 }
+
                 body {
                     background: white;
                     margin: 0;
@@ -86,7 +87,7 @@ function printImages() {
                     justify-content: flex-start;
                     align-items: flex-start;
                 }
-                
+
                 .page:last-child {
                     page-break-after: auto;
                     break-after: auto;
@@ -94,23 +95,29 @@ function printImages() {
 
                 .grid {
                     display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+
                     width: 100%;
                     height: 100%;
                 }
 
                 .cell {
+                    width: 300px;
+                    height: 300px;
+
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     position: relative;
                 }
-                
+
                 .cell > img {
-                    position: absalute;
+                    position: absolute;
                     display: block;
                     max-width: 100%;
                     max-height: 100%;
-                    ${keepAspect ? 'object-fit: contain;' : 'object-fit: fill;'}
+                    object-fit: ${keepAspect ? 'contain' : 'fill'};
                 }
 
                 @page {
