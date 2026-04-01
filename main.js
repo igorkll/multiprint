@@ -100,11 +100,13 @@ function printImages() {
 
                     width: 100%;
                     height: 100%;
+
+                    flex-wrap: wrap;
                 }
 
                 .cell {
-                    width: 300px;
-                    height: 300px;
+                    width: ${100 / cols}%;
+                    height: ${100 / rows}%;
 
                     display: flex;
                     align-items: center;
@@ -114,9 +116,10 @@ function printImages() {
 
                 .cell > img {
                     position: absolute;
-                    display: block;
-                    max-width: 100%;
-                    max-height: 100%;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                     object-fit: ${keepAspect ? 'contain' : 'fill'};
                 }
 
@@ -172,10 +175,10 @@ function printImages() {
         }
 
         // Заполняем оставшиеся ячейки пустыми, чтобы сетка сохраняла структуру
-        const cellsOnPage = endIdx - startIdx;
-        for (let j = cellsOnPage; j < imagesPerPage; j++) {
-            printWindow.document.write(`<div class="cell"></div>`)
-        }
+        //const cellsOnPage = endIdx - startIdx;
+        //for (let j = cellsOnPage; j < imagesPerPage; j++) {
+        //    printWindow.document.write(`<div class="cell"></div>`)
+        //}
 
         printWindow.document.write(`</div></div>`)
     }
