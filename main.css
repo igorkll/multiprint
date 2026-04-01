@@ -23,8 +23,11 @@ body {
     
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+
+    gap: 40px;
+    padding: 40px;
 }
 
 .control-box {
@@ -66,3 +69,7 @@ body {
     background-color: #910000;
 }
 
+.title {
+    font-size: 120px;
+    color: #ffffff;
+}
