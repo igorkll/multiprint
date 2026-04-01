@@ -112,6 +112,12 @@ function printImages() {
                     max-height: 100%;
                     ${keepAspect ? 'object-fit: contain;' : 'object-fit: fill;'}
                 }
+
+                @page {
+                    margin: 0;
+                    size: auto;
+                }
+                    
                 @media print {
                     body {
                         margin: 0;
@@ -130,6 +136,9 @@ function printImages() {
                     }
                     .cell {
                         background: none;
+                    }
+                    @page {
+                        margin: 0;
                     }
                 }
             </style>
