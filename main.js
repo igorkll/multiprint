@@ -34,18 +34,18 @@ updatePagesCount()
 
 function printImages() {
     if (selectedFiles.length === 0) {
-        alert('Сначала выберите изображения.')
+        alert('First, select the images')
         return
     }
 
     const cols = parseInt(colsInput.value, 10)
     const rows = parseInt(rowsInput.value, 10)
     if (isNaN(cols) || cols < 1) {
-        alert('Количество столбцов должно быть не менее 1')
+        alert('The number of columns must be at least 1')
         return
     }
     if (isNaN(rows) || rows < 1) {
-        alert('Количество строк должно быть не менее 1')
+        alert('The number of rows must be at least 1')
         return
     }
 
@@ -55,7 +55,7 @@ function printImages() {
 
     const printWindow = window.open('', '_blank')
     if (!printWindow) {
-        alert('Разрешите всплывающие окна для этого сайта.')
+        alert('Allow pop-up windows for this site, it is necessary to bring up the print window')
         return
     }
 
@@ -64,7 +64,6 @@ function printImages() {
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>Печать изображений</title>
             <style>
                 * {
                     margin: 0;
