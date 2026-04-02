@@ -4,6 +4,7 @@ const rowsInput = document.getElementById('rows')
 const keepAspectCheck = document.getElementById('keepAspect')
 const printBtn = document.getElementById('printBtn')
 const pagesCountSpan = document.getElementById('pagesCount')
+const padding = document.getElementById('padding')
 
 fileInput.value = '';
 let selectedFiles = []
@@ -94,6 +95,8 @@ function printImages() {
                     flex-direction: column;
                     justify-content: flex-start;
                     align-items: flex-start;
+                    margin: 0;
+                    padding: ${padding.value / 2}mm;
                 }
 
                 .page:last-child {
@@ -113,8 +116,9 @@ function printImages() {
                 }
 
                 .cell {
-                    width: ${100 / cols}%;
-                    height: ${100 / rows}%;
+                    margin: ${padding.value / 2}mm;
+                    width: calc(${100 / cols}% - ${padding.value}mm);
+                    height: calc(${100 / rows}% - ${padding.value}mm);
                     position: relative;
                 }
 
@@ -131,26 +135,9 @@ function printImages() {
                     margin: 0;
                     size: auto;
                 }
-                    
-                @media print {
-                    body {
-                        margin: 0;
-                        padding: 0;
-                    }
-                    .page {
-                        margin: 0;
-                        padding: 0;
-                        page-break-after: always;
-                    }
-                    .page:last-child {
-                        page-break-after: auto;
-                    }
-                    .cell {
-                        background: none;
-                    }
-                    @page {
-                        margin: 0;
-                    }
+                
+                .page:last-child {
+                    page-break-after: auto;
                 }
             </style>
         </head>
